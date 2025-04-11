@@ -7,7 +7,24 @@ export default withMT({
   ],
 
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        bg: 'var(--color-bg)',
+        surface: 'var(--color-surface)',
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        text: 'var(--color-text)',
+      },
+      animation: {
+        fade: 'fadeIn 0.3s ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+      },
+    },
   },
   plugins: [],
 })

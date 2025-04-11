@@ -1,8 +1,8 @@
-import { button } from "@material-tailwind/react";
+// components/ToDoCard.jsx
 import { FaPencilAlt } from "react-icons/fa";
-
 const ToDoCard = ({ todo, setTodos, setIsOpen, setIsEditing, setTitle, setDesc }) => {
     const { id, title, desc, isCompleted } = todo;
+
     function toggleIsCompleted() {
         setTodos((prev) => {
             const updatedTodos = prev.map(item =>
@@ -35,14 +35,16 @@ const ToDoCard = ({ todo, setTodos, setIsOpen, setIsEditing, setTitle, setDesc }
     }
 
     return (
-        <div className="h-[300px] w-[300px] p-5 rounded-lg bg-[white] shadow-lg flex flex-col gap-5">
+        <div className="h-72 w-72 p-5 bg-surface rounded-lg shadow-lg flex flex-col justify-start gap-8
+                      transition-shadow duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-1">
             <div className="flex justify-between items-end">
-                <span className="font-semibold flex flex-wrap">{title}</span>
+                <h3 className="font-semibold">{title}</h3>
                 <div className="flex gap-2">
-                    <button onClick={toggleIsCompleted}>
-                        {
-                            isCompleted ? <div className="text-xl">✅</div> : <div className="h-5 w-5 rounded-sm border border-black bg-[#9ACBD0]"></div>
-                        }
+                    <button
+                        onClick={toggleIsCompleted}
+                        className="p-1 rounded hover:bg-secondary transition-colors duration-200"
+                    >
+                        {isCompleted ? '✅' : <div className="h-5 w-5 bg-secondary rounded-sm" />}
                     </button>
                     <button onClick={() => editCard(id, title, desc)}>
                         <FaPencilAlt />
@@ -52,12 +54,8 @@ const ToDoCard = ({ todo, setTodos, setIsOpen, setIsEditing, setTitle, setDesc }
                     </button>
                 </div>
             </div>
-            <div>
-                <p className="text-sm">
-                    {desc}
-                </p>
-            </div>
+            <p className="text-sm text-text">{desc}</p>
         </div>
-    )
-}
+    );
+};
 export default ToDoCard;

@@ -1,13 +1,27 @@
-const Form = ({ handleSubmit, setTitle, setDesc, title, desc, titleError }) => {
-    return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <input type="text" name="task" id="task-title" placeholder="Enter the task title.." className="w-full p-2 rounded-md bg-gray-50" onChange={(e) => setTitle(e.target.value)} value={title} />
-            {
-                titleError && <p className="text-[red]">{titleError}</p>
-            }
-            <textarea name="task-description" id="task-desc" placeholder="Add a description..." className="w-full h-full max-h-full p-3 rounded-md bg-gray-50" onChange={(e) => setDesc(e.target.value)} value={desc}></textarea>
-            <button type="submit" className="rounded-md bg-[#FF9149] p-2 text-xl text-white" onClick={handleSubmit}>Submit</button>
-        </form>
-    )
-}
+// components/Form.jsx
+const Form = ({ handleSubmit, setTitle, setDesc, title, desc, titleError }) => (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 animate-fade">
+        <input
+            type="text"
+            placeholder="Task title…"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full p-2 rounded-md bg-secondary/20 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+        />
+        {titleError && <p className="text-red-500 text-sm">{titleError}</p>}
+        <textarea
+            placeholder="Description…"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            className="w-full p-2 rounded-md bg-secondary/20 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+        />
+        <button
+            type="submit"
+            className="self-end px-6 py-2 rounded-md bg-primary text-white font-medium
+                   hover:bg-primary/90 active:scale-95 transition-all duration-150"
+        >
+            Save
+        </button>
+    </form>
+);
 export default Form;
