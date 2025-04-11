@@ -2,7 +2,7 @@
 import './index.css';
 
 import { useState } from 'react';
-import NavBar from './components/NavBar';
+import NavBar from './components/Navbar';
 import Carousel from './components/Carousel';
 import ToDoSection from './components/ToDoSection';
 import Modal from './components/Modal';
