@@ -1,30 +1,53 @@
 import { useState } from "react";
+import Form from "./Form";
 
-const AddTaskModal = ({ closeModal, setTodos }) => {
+const AddTaskModal = ({ closeModal, setTodos, isEditing, setTitle, setDesc, desc, title }) => {
 
-    const [title, setTitle] = useState("");
-    const [desc, setDesc] = useState("");
+    const [titleError, setTitleError] = useState("");
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!title.trim()) {
+            setTitleError("Title can't be Empty!");
+            return;
+        }
+        setTitleError("");
 
-    function handleSubmit() {
-        const newTodo = {
-            title,
-            desc,
-            isCompleted: false,
-            id: Date.now()
+        if (isEditing !== -1) {
+            setTodos((prev) => {
+                const updatedTodos = prev.map((item) => {
+                    if (item.id === isEditing) {
+                        console.log(title);
+                        console.log(desc);
+                        item.title = title;
+                        item.desc = desc;
+                        return item;
+                    }
+                    return item;
+                });
+                localStorage.setItem("todoList", JSON.stringify(updatedTodos));
+                return updatedTodos;
+            })
+        } else {
+            const newTodo = {
+                title: title,
+                desc: desc,
+                isCompleted: false,
+                id: Date.now()
+            }
+
+            let newTodos;
+            setTodos((prev) => {
+                newTodos = [newTodo, ...prev];
+                localStorage.setItem("todoList", JSON.stringify(newTodos));
+                return newTodos;
+            });
+            closeModal();
         }
 
-        setTodos((prev) => {
-            return [newTodo, ...prev];
-        });
-
-        closeModal();
     }
+
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            <input type="text" name="task" id="task-title" placeholder="Enter the task title.." className="w-full p-2 rounded-md bg-gray-50" onInput={(e) => (setTitle(e.target.value))} />
-            <textarea name="task-description" id="task-desc" placeholder="Add a description..." className="w-full h-full max-h-full p-3 rounded-md bg-gray-50" onInput={(e) => (setDesc(e.target.value))}></textarea>
-            <button type="submit" className="rounded-md bg-[#FF9149] p-2 text-xl text-white" onClick={handleSubmit}>Add Task</button>
-        </form>
+        <Form handleSubmit={handleSubmit} setTitle={setTitle} setDesc={setDesc} title={title} desc={desc} titleError={titleError} />
     )
 }
 export default AddTaskModal;

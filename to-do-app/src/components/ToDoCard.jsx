@@ -1,31 +1,38 @@
 import { button } from "@material-tailwind/react";
 import { FaPencilAlt } from "react-icons/fa";
 
-const ToDoCard = ({ todo, setTodos, setIsOpen }) => {
+const ToDoCard = ({ todo, setTodos, setIsOpen, setIsEditing, setTitle, setDesc }) => {
     const { id, title, desc, isCompleted } = todo;
     function toggleIsCompleted() {
         todo.isCompleted = !todo.isCompleted;
         setTodos((prev) => {
-            return prev.map((item) => {
+            const updatedTodos = prev.map((item) => {
                 if (item.id === id) {
                     item.isCompleted = !item.isCompleted;
                 }
                 return item;
-            })
+            });
+            localStorage.setItem("todoList", JSON.stringify(updatedTodos));
+            return updatedTodos;
         })
     }
 
-    function editCard() {
+    function editCard(id, title, desc) {
         setIsOpen(true);
+        setTitle(title)
+        setDesc(desc)
+        setIsEditing(id);
     }
 
     function deleteCard() {
         setTodos((prev) => {
-            return prev.filter((item) => {
+            const newTodos = prev.filter((item) => {
                 if (item.id != id) {
                     return item;
                 }
             })
+            localStorage.setItem("todoList", JSON.stringify(newTodos));
+            return newTodos;
         })
     }
 
@@ -39,7 +46,7 @@ const ToDoCard = ({ todo, setTodos, setIsOpen }) => {
                             isCompleted ? <div className="text-xl">✅</div> : <div className="h-5 w-5 rounded-sm border border-black bg-[#9ACBD0]"></div>
                         }
                     </button>
-                    <button onClick={editCard}>
+                    <button onClick={() => editCard(id, title, desc)}>
                         <FaPencilAlt />
                     </button>
                     <button className="" onClick={deleteCard}>
