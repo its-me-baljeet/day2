@@ -16,8 +16,6 @@ const AddTaskModal = ({ closeModal, setTodos, isEditing, setTitle, setDesc, desc
             setTodos((prev) => {
                 const updatedTodos = prev.map((item) => {
                     if (item.id === isEditing) {
-                        console.log(title);
-                        console.log(desc);
                         item.title = title;
                         item.desc = desc;
                         return item;
@@ -41,8 +39,8 @@ const AddTaskModal = ({ closeModal, setTodos, isEditing, setTitle, setDesc, desc
                 localStorage.setItem("todoList", JSON.stringify(newTodos));
                 return newTodos;
             });
-            closeModal();
         }
+        closeModal();
 
     }
 
