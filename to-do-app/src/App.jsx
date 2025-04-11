@@ -4,7 +4,6 @@ import ToDoSection from "./components/ToDoSection"
 import AddTaskModal from "./components/AddTaskModal";
 import { useState } from "react";
 import Modal from "./components/Modal";
-import SideBar from "./SideBar";
 
 const todosInitial = JSON.parse(localStorage.getItem("todoList")) || [];
 
