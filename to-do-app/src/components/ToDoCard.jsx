@@ -4,14 +4,12 @@ import { FaPencilAlt } from "react-icons/fa";
 const ToDoCard = ({ todo, setTodos, setIsOpen, setIsEditing, setTitle, setDesc }) => {
     const { id, title, desc, isCompleted } = todo;
     function toggleIsCompleted() {
-        todo.isCompleted = !todo.isCompleted;
         setTodos((prev) => {
-            const updatedTodos = prev.map((item) => {
-                if (item.id === id) {
-                    item.isCompleted = !item.isCompleted;
-                }
-                return item;
-            });
+            const updatedTodos = prev.map(item =>
+                item.id === id
+                    ? { ...item, isCompleted: !item.isCompleted }
+                    : item
+            );
             localStorage.setItem("todoList", JSON.stringify(updatedTodos));
             return updatedTodos;
         })
